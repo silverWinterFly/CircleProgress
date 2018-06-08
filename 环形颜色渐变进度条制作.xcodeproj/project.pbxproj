@@ -15,6 +15,7 @@
 		2643538D20C928C600A677C8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2643538C20C928C600A677C8 /* main.m */; };
 		2643539720C928C600A677C8 /* ___________Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2643539620C928C600A677C8 /* ___________Tests.m */; };
 		264353A220C928C600A677C8 /* ___________UITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 264353A120C928C600A677C8 /* ___________UITests.m */; };
+		264353B320C9292D00A677C8 /* CircleProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 264353B220C9292D00A677C8 /* CircleProgressView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,8 @@
 		2643539D20C928C600A677C8 /* 环形颜色渐变进度条制作UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "环形颜色渐变进度条制作UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		264353A120C928C600A677C8 /* ___________UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "___________UITests.m"; sourceTree = "<group>"; };
 		264353A320C928C600A677C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		264353B120C9292D00A677C8 /* CircleProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CircleProgressView.h; sourceTree = "<group>"; };
+		264353B220C9292D00A677C8 /* CircleProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CircleProgressView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,15 +104,9 @@
 		2643537C20C928C500A677C8 /* 环形颜色渐变进度条制作 */ = {
 			isa = PBXGroup;
 			children = (
-				2643537D20C928C500A677C8 /* AppDelegate.h */,
-				2643537E20C928C600A677C8 /* AppDelegate.m */,
-				2643538020C928C600A677C8 /* ViewController.h */,
-				2643538120C928C600A677C8 /* ViewController.m */,
-				2643538320C928C600A677C8 /* Main.storyboard */,
-				2643538620C928C600A677C8 /* Assets.xcassets */,
-				2643538820C928C600A677C8 /* LaunchScreen.storyboard */,
+				264353B020C928FD00A677C8 /* CircleProgress(环形进度条) */,
+				264353AF20C928E300A677C8 /* System(系统) */,
 				2643538B20C928C600A677C8 /* Info.plist */,
-				2643538C20C928C600A677C8 /* main.m */,
 			);
 			path = "环形颜色渐变进度条制作";
 			sourceTree = "<group>";
@@ -130,6 +127,30 @@
 				264353A320C928C600A677C8 /* Info.plist */,
 			);
 			path = "环形颜色渐变进度条制作UITests";
+			sourceTree = "<group>";
+		};
+		264353AF20C928E300A677C8 /* System(系统) */ = {
+			isa = PBXGroup;
+			children = (
+				2643537D20C928C500A677C8 /* AppDelegate.h */,
+				2643537E20C928C600A677C8 /* AppDelegate.m */,
+				2643538020C928C600A677C8 /* ViewController.h */,
+				2643538120C928C600A677C8 /* ViewController.m */,
+				2643538320C928C600A677C8 /* Main.storyboard */,
+				2643538620C928C600A677C8 /* Assets.xcassets */,
+				2643538820C928C600A677C8 /* LaunchScreen.storyboard */,
+				2643538C20C928C600A677C8 /* main.m */,
+			);
+			path = "System(系统)";
+			sourceTree = "<group>";
+		};
+		264353B020C928FD00A677C8 /* CircleProgress(环形进度条) */ = {
+			isa = PBXGroup;
+			children = (
+				264353B120C9292D00A677C8 /* CircleProgressView.h */,
+				264353B220C9292D00A677C8 /* CircleProgressView.m */,
+			);
+			path = "CircleProgress(环形进度条)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,6 +287,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2643538220C928C600A677C8 /* ViewController.m in Sources */,
+				264353B320C9292D00A677C8 /* CircleProgressView.m in Sources */,
 				2643538D20C928C600A677C8 /* main.m in Sources */,
 				2643537F20C928C600A677C8 /* AppDelegate.m in Sources */,
 			);
