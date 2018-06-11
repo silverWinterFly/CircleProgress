@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+//版本号
+#define CPVersion @"1.1.0"
+
 //将角度数值转化为角度 d(0-360)
 #define CircleDegreeToRadian(d) (d)*(M_PI/180.0)
 
@@ -56,6 +59,38 @@
  进度条顺逆时针方向，默认为顺时针，看起来舒服点
  */
 @property (nonatomic, assign) BOOL isClockDirection;
+
+
+#pragma mark 2 这一部分主要是进度条中的动画处理部分，原理就是drawrect的不停重绘，在人眼无法识别的情况下，就是漂亮流畅的动画了。
+/**
+ 不加动画, 默认为NO。
+ 友情提示，如果你写的页面有类似滑动条的方法控制进度线性增减的画，就将此属性设置为YES,即不加动画。
+ */
+@property (nonatomic, assign) BOOL isNoAnimated;
+
+/**
+ 是否从上次数值开始动画。默认为YES，即每次都从上次动画结束开始动画。
+ */
+@property (nonatomic, assign) BOOL isStartFromLast;
+
+/**
+ 元素（小块）个数。默认为64，越高线条越平滑，性能越差。64就刚刚好，当然这个属性其实还是看项目的需求而设置的更高或更低。
+ */
+@property (nonatomic, assign) NSInteger subdivCount;
+
+/**
+ 动画时长。当animationSameTime为NO时，此属性为动画的最长时间，即progress=1时的动画时间。
+ */
+@property (nonatomic, assign) CGFloat animationDuration;
+
+/**
+ 动画是否同等时间。
+ 为YES则不同进度动画时长都为animationDuration，
+ 为NO则根据不同进度对应不同动画时长，进度最大时动画时长为animationDuration。
+ 默认为YES
+ */
+@property (nonatomic, assign) BOOL animationSameTime;
+
 
 /**
  初始化方法
