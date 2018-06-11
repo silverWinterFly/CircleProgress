@@ -112,6 +112,17 @@
     _animationDuration      = 2;
     //不同动画的时长是否相同
     _animationSameTime      = YES;
+    
+#pragma mark 3 这一部分主要是进度条中的颜色渐变处理部分。
+    /*
+     选择了渐变色后，线条颜色就不用管了
+     */
+    //是否开启渐变色模式
+    _isGradientStyle = YES;
+    //开始颜色
+    _startColor = [UIColor whiteColor];
+    //结束颜色
+    _endColor   = [UIColor blueColor];
 }
 
 //绘制部分，一切绘图都在这个方法里进行，不要写到别的地方去。
@@ -155,34 +166,37 @@
     }
     //设置线条宽度
     CGContextSetLineWidth(ctx, self.strokeWidth);
-    //设置线条颜色
-    CGContextSetStrokeColorWithColor(ctx, self.strokeColor.CGColor);
     //设置中心填充颜色
     CGContextSetFillColorWithColor(ctx, [UIColor clearColor].CGColor);
-   
+    if (!self.isGradientStyle) {//不使用渐变色
+        //设置线条颜色
+        CGContextSetStrokeColorWithColor(ctx, self.strokeColor.CGColor);
+    }
     
     
-    
-    //本次开始角度
-    float thisStartAngle = self.startAngle;
-    //本次结束角度
-    float thisOverAngle  = self.startAngle + M_PI*2*self.currentProgress;
-    //每一块的角度
-    float perAngle = (thisOverAngle - thisStartAngle)/self.subdivCount;
+#pragma mark 2 这一部分主要是进度条中的动画处理部分，原理就是drawrect的不停重绘，在人眼无法识别的情况下，就是漂亮流畅的动画了。
+    //每一小块的角度（弧度值）
+    float perAngle = M_PI*2*self.currentProgress/self.subdivCount;
     
     //当前开始角度
-    float currentStartAngle = thisStartAngle;
+    float currentStartAngle;
     //当前结束角度
-    float currentOverAngle  = currentStartAngle + perAngle;
-  
+    float currentOverAngle;
+    
+    //当前颜色
+    UIColor *currentColor;
     for (NSInteger i = 0; i<self.subdivCount; i++) {
-
+        if (self.isGradientStyle) {
+            #pragma mark 3 这一部分主要是进度条中的颜色渐变处理部分。
+            //获取当前渐变色
+            currentColor = [self getGradientColor:i*1.0/self.subdivCount];
+            //设置线条颜色
+            CGContextSetStrokeColorWithColor(ctx, currentColor.CGColor);
+        }
         //当前开始角度
-        currentStartAngle = thisStartAngle+perAngle*i;
-        
+        currentStartAngle = self.startAngle+perAngle*i;
         //当前结束角度
         currentOverAngle  = currentStartAngle + perAngle;
-        
         //添加路径
         CGContextAddArc(ctx,
                         center.x,
@@ -191,7 +205,6 @@
                         currentStartAngle,
                         currentOverAngle,
                         self.isClockDirection);
-        
         //开始渲染绘制图形（画图）kCGPathFillStroke这个模式的意思是描边和填充部分都要绘制
         /**
          具体效果，自行尝试
@@ -313,7 +326,30 @@
     //标记刷新（动画增长）
     [self setNeedsDisplay];
 }
-
+#pragma mark 3 这一部分主要是进度条中的颜色渐变处理部分。
+//获取当前颜色
+- (UIColor *)getGradientColor:(CGFloat)current{
+    /*
+     此处讲解一下，线性颜色获取原理
+     一个颜色是由R\G\B\A四个要素组成，即由红、绿、蓝、透明度四个元素组成，掌控了这4个要素，你就掌控了这个颜色，所以定义2个float型的4位数组c1,c2用来存储这2个颜色的4个要素。
+     然后该如何获取开始与结束颜色的这4个要素呢，不用急，系统已经给我们准备好了方法：
+     - (BOOL)getRed:(nullable CGFloat *)red green:(nullable CGFloat *)green blue:(nullable CGFloat *)blue alpha:(nullable CGFloat *)alpha NS_AVAILABLE_IOS(5_0);
+     用这个方法就能获取一个颜色的4个要素。也就是下方的1，2步。
+     等你获取了开始，结束颜色的这4个要素后，我们就可以进行第3步，用系统的方法：
+     + (UIColor *)colorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
+     制造一个在当前进度的开始结束之间的相应颜色出来。哦，什么是当前进度啊，就是方法参数current（0～1）之间。为0时是开始颜色，为1时是结束颜色。
+     */
+    
+    //1
+    CGFloat c1[4];
+    CGFloat c2[4];
+    //2
+    [_startColor getRed:&c1[0] green:&c1[1] blue:&c1[2] alpha:&c1[3]];
+    [_endColor getRed:&c2[0] green:&c2[1] blue:&c2[2] alpha:&c2[3]];
+    
+    //3
+    return [UIColor colorWithRed:current*c2[0]+(1-current)*c1[0] green:current*c2[1]+(1-current)*c1[1] blue:current*c2[2]+(1-current)*c1[2] alpha:current*c2[3]+(1-current)*c1[3]];
+}
 #pragma mark 一些属性设置，其实这些东西没必要设置，只是演示一下怎么处理属性的改变
 /**
  真需要改变的时候，直接改变属性，然后主动刷新下进度就行（比如设置下进度条）。当然这样写比较好，在定义一些复杂的类（属性比较多，层次比较多时），这样些可以提高代码可读性，令代码整体看起来更漂亮。这里只是随便两个做例子，有想加的比如颜色什么的自己加

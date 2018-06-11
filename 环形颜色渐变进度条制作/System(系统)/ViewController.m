@@ -37,6 +37,8 @@
     cpView.animationDuration = 0.8;
     //动画时间不等同，看效果
 //    cpView.animationSameTime = NO;
+    //加渐变色效果
+    cpView.isGradientStyle = YES;
     [self.view addSubview:cpView];
     cpView.layer.masksToBounds = YES;
     cpView.layer.cornerRadius = 50;
@@ -85,6 +87,7 @@
         self.cpView.progress = self.animationTestTF.text.floatValue;
     }
 }
+//点击屏幕，收回键盘
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [super touchesBegan:touches withEvent:event];
     

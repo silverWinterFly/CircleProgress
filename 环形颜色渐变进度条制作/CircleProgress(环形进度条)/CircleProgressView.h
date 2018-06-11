@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+//相关代码解释：https://www.jianshu.com/p/e580ab789a21
+
 //版本号
-#define CPVersion @"1.1.0"
+#define CPVersion @"1.1.1"
 
 //将角度数值转化为角度 d(0-360)
 #define CircleDegreeToRadian(d) (d)*(M_PI/180.0)
@@ -90,6 +92,26 @@
  默认为YES
  */
 @property (nonatomic, assign) BOOL animationSameTime;
+
+#pragma mark 3 这一部分主要是进度条中的颜色渐变处理部分。
+/**
+ 是否开启渐变色模式
+ 默认为NO
+ */
+//assign
+@property (assign, nonatomic) BOOL isGradientStyle;
+
+/**
+ 线条(进度条)开始颜色。
+ 进度条的颜色，默认为白色，可更改。
+ */
+@property (nonatomic, strong) UIColor *startColor;
+
+/**
+ 线条(进度条)结束颜色。
+ 进度条的颜色，默认为蓝色（我喜欢蓝色），可更改。
+ */
+@property (nonatomic, strong) UIColor *endColor;
 
 
 /**
